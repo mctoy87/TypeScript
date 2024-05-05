@@ -9,6 +9,8 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+;
+// persons array
 var persons = [
     {
         name: 'Иван Петров',
@@ -40,10 +42,19 @@ var persons = [
         family: 'Ляйсан Утяшева'
     }
 ];
-var logPerson = function (user) {
-    console.log("".concat(user.name, ", ").concat(user.age, ", ").concat(user.role));
+// give the administrator role for first and second person
+persons[0] = __assign(__assign({}, persons[0]), { role: 'Администратор' });
+persons[1] = __assign(__assign({}, persons[1]), { role: 'Администратор' });
+// typeGuard for Person
+var isAdmin = function (value) { return 'role' in value; };
+var logPerson = function (person) {
+    var information;
+    if (isAdmin(person)) {
+        information = person.role;
+    }
+    else {
+        information = person.group;
+    }
+    console.log("".concat(person.name, ", ").concat(person.age, ", ").concat(information));
 };
-persons.forEach(function (person) {
-    var admin = __assign(__assign({}, person), { role: 'Администратор' });
-    logPerson(admin);
-});
+persons.forEach(logPerson);

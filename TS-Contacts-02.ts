@@ -1,21 +1,24 @@
-  type User = {
-    name: string;
-    age: number;
-    group?: string;
-    family?: string,
-    friends?: string[];
-    isDied?: boolean;
-  };
+// User interface
+interface User {
+  name: string;
+  age: number;
+  group: string;
+  family?: string,
+  friends?: string[];
+  isDied?: boolean;
+};
 
-
-type Admin = {
+// admin interface
+interface Admin {
   name: string;
   age: number;
   role: string;
 }
 
+// type of role
 type Person = User | Admin;
 
+// persons array
 const persons: Person[] = [
   {
     name: 'Иван Петров',
@@ -48,11 +51,21 @@ const persons: Person[] = [
   }
 ];
 
-const logPerson = (user: Admin) => {
-  console.log(`${user.name}, ${user.age}, ${user.role}`);
+// give the administrator role for first and second person
+persons[0] = { ...persons[0], role: 'Администратор' };
+persons[1] = { ...persons[1], role: 'Администратор' };
+
+// typeGuard for Person
+const isAdmin = (value: User | Admin):value is Admin => 'role' in value;
+
+const logPerson = (person: Person):void => {
+  let information: string;
+  if (isAdmin(person)) {
+    information = person.role;
+  } else {
+    information = person.group;
+  }
+  console.log(`${person.name}, ${person.age}, ${information}`);
 };
 
-persons.forEach((person) => {
-  const admin: Admin = {...person, role: 'Администратор'};
-  logPerson(admin);
-});
+persons.forEach(logPerson);
