@@ -1,3 +1,4 @@
+{
 // User interface
 interface User {
   type: 'user';
@@ -55,3 +56,4 @@ console.log();
 
 console.log('Users:');
 persons.filter(isUser).forEach(logPerson);
+}
